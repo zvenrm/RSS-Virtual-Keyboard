@@ -179,7 +179,7 @@ const keyData = [
     {
       key: { ru: 'Alt', en: 'Alt' }, code: 'AltLeft', class: 'key key_leftalt', noType: true,
     },
-    { key: { ru: '', en: '' }, code: 'Space', class: 'key key_space' },
+    { key: { ru: 'Space', en: 'Space' }, code: 'Space', class: 'key key_space' },
     {
       key: { ru: 'Alt', en: 'Alt' }, code: 'AltRight', class: 'key key_rightalt', noType: true,
     },
