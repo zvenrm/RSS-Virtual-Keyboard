@@ -87,14 +87,22 @@ document.addEventListener('keydown', (e) => {
     if (lang === 'en') {
       for (let i = 0; i < 5; i += 1) {
         for (let j = 0; j < rows[i].children.length; j += 1) {
-          rows[i].children[j].innerHTML = keyData[i][j].key.ru;
+          if (!caps.classList.contains('key_caps') && rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.ru;
+          } else if (rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.ru.toUpperCase();
+          }
         }
       }
       lang = 'ru';
     } else {
       for (let i = 0; i < 5; i += 1) {
         for (let j = 0; j < rows[i].children.length; j += 1) {
-          rows[i].children[j].innerHTML = keyData[i][j].key.en;
+          if (!caps.classList.contains('key_caps') && rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.en;
+          } else if (rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.en.toUpperCase();
+          }
         }
       }
       lang = 'en';
