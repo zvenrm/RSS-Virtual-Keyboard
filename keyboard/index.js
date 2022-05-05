@@ -12,6 +12,8 @@ const input = document.querySelector('.input');
 const caps = document.querySelector('.CapsLock');
 
 let lang = 'en';
+input.focus();
+let cursor = input.selectionStart;
 
 function shiftChange(e) {
   if (e.type === 'keydown') {
@@ -77,7 +79,14 @@ function capsChange() {
 rows.forEach((e) => {
   e.addEventListener('click', (event) => {
     if (event.target.textContent.length === 1) {
-      input.value += event.target.textContent;
+      if (input.selectionStart === input.value.length) {
+        cursor = input.value.length;
+      }
+      input.setSelectionRange(cursor, cursor);
+      const text = [...input.value];
+      text.splice(cursor, 0, event.target.textContent);
+      input.value = text.join('');
+      cursor += 1;
     }
   });
 });
@@ -113,6 +122,16 @@ document.addEventListener('keydown', (e) => {
     shiftChange(e);
   } else if (e.key === 'CapsLock') {
     capsChange();
+  } else if (e.key.length === 1) {
+    e.preventDefault();
+    input.setSelectionRange(cursor, cursor);
+    let text = [...input.value];
+    const cur = e.key;
+    text.splice(cursor, 0, cur);
+    text = text.join('');
+    input.value = text;
+    cursor += 1;
+    input.setSelectionRange(cursor, cursor);
   }
 });
 
@@ -121,4 +140,9 @@ document.addEventListener('keyup', (e) => {
   if (e.key === 'Shift') {
     shiftChange(e);
   }
+});
+
+input.addEventListener('click', () => {
+  cursor = input.selectionStart;
+  input.setSelectionRange(cursor, cursor);
 });
