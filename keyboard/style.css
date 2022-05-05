@@ -78,7 +78,12 @@ body{
 
 .key:active {
     transform: scale(0.95, 0.95);
-    background-color: #003904;
+    background-color: #00930a;
+}
+
+.key-active{
+    transform: scale(0.95, 0.95);
+    background-color: #00930a;
 }
 
 .tilda{
@@ -93,8 +98,20 @@ body{
     width: 95px;
 }
 
-.key_capslock{
+.CapsLock{
+    position: relative;
     width: 110px;
+}
+
+.key_caps::after{
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(255, 0, 0);
 }
 
 .key_enter{

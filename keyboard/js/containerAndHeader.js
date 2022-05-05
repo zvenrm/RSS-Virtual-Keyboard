@@ -6,7 +6,7 @@ class ContainerAndHeader extends Control {
     this.titlle = new Control(this.element, 'h1', 'tittle');
     this.titlle.element.innerHTML = 'Virtual Keyboard For Windows';
     this.changeLang = new Control(this.element, 'p', 'description');
-    this.changeLang.element.innerHTML = 'To change the language press the "ALT + SHIFT" combination';
+    this.changeLang.element.innerHTML = 'To change the language press the "ALT + CTRL" combination';
   }
 }
 
