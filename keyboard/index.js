@@ -118,45 +118,79 @@ function shiftChange(e) {
 }
 
 function tabChange() {
-  input.setSelectionRange(cursor, cursor);
-  let text = [...input.value];
-  text.splice(cursor, 0, '    ');
-  text = text.join('');
-  input.value = text;
-  cursor += 4;
-  input.setSelectionRange(cursor, cursor);
+  if (input.selectionStart !== input.selectionEnd) {
+    let text = [...input.value];
+    text.splice(input.selectionStart, input.selectionEnd - input.selectionStart, '    ');
+    text = text.join('');
+    input.value = text;
+    cursor += 4;
+    input.setSelectionRange(cursor, cursor);
+  } else {
+    input.setSelectionRange(cursor, cursor);
+    let text = [...input.value];
+    text.splice(cursor, 0, '    ');
+    text = text.join('');
+    input.value = text;
+    cursor += 4;
+    input.setSelectionRange(cursor, cursor);
+  }
 }
 
 function backspaceChange() {
   if (input.value.length !== 0 && cursor !== 0) {
-    input.setSelectionRange(cursor, cursor);
-    let text = [...input.value];
-    text.splice(cursor - 1, 1);
-    text = text.join('');
-    input.value = text;
-    cursor -= 1;
-    input.setSelectionRange(cursor, cursor);
+    if (input.selectionStart !== input.selectionEnd) {
+      let text = [...input.value];
+      text.splice(input.selectionStart, input.selectionEnd - input.selectionStart);
+      text = text.join('');
+      input.value = text;
+      input.setSelectionRange(cursor, cursor);
+    } else {
+      input.setSelectionRange(cursor, cursor);
+      let text = [...input.value];
+      text.splice(cursor - 1, 1);
+      text = text.join('');
+      input.value = text;
+      cursor -= 1;
+      input.setSelectionRange(cursor, cursor);
+    }
   }
 }
 
 function deleteChange() {
   if (input.selectionStart !== input.value.length) {
-    let text = [...input.value];
-    text.splice(cursor, 1);
-    text = text.join('');
-    input.value = text;
-    input.setSelectionRange(cursor, cursor);
+    if (input.selectionStart !== input.selectionEnd) {
+      let text = [...input.value];
+      text.splice(input.selectionStart, input.selectionEnd - input.selectionStart);
+      text = text.join('');
+      input.value = text;
+      input.setSelectionRange(cursor, cursor);
+    } else {
+      let text = [...input.value];
+      text.splice(cursor, 1);
+      text = text.join('');
+      input.value = text;
+      input.setSelectionRange(cursor, cursor);
+    }
   }
 }
 
 function enterChange() {
-  input.setSelectionRange(cursor, cursor);
-  let text = [...input.value];
-  text.splice(cursor, 0, '\n');
-  text = text.join('');
-  input.value = text;
-  cursor += 1;
-  input.setSelectionRange(cursor, cursor);
+  if (input.selectionStart !== input.selectionEnd) {
+    let text = [...input.value];
+    text.splice(input.selectionStart, input.selectionEnd - input.selectionStart, '\n');
+    text = text.join('');
+    input.value = text;
+    cursor += 1;
+    input.setSelectionRange(cursor, cursor);
+  } else {
+    input.setSelectionRange(cursor, cursor);
+    let text = [...input.value];
+    text.splice(cursor, 0, '\n');
+    text = text.join('');
+    input.value = text;
+    cursor += 1;
+    input.setSelectionRange(cursor, cursor);
+  }
 }
 
 function capsChange() {
@@ -231,14 +265,22 @@ rows.forEach((e) => {
       if (input.selectionStart === input.value.length) {
         cursor = input.value.length;
       }
-
-      input.setSelectionRange(cursor, cursor);
-
-      const text = [...input.value];
-      text.splice(cursor, 0, event.target.textContent);
-      input.value = text.join('');
-      cursor += 1;
-      input.setSelectionRange(cursor, cursor);
+      if (input.selectionStart !== input.selectionEnd) {
+        let text = [...input.value];
+        const currTarget = event.target.textContent;
+        text.splice(input.selectionStart, input.selectionEnd - input.selectionStart, currTarget);
+        text = text.join('');
+        input.value = text;
+        cursor += 1;
+        input.setSelectionRange(cursor, cursor);
+      } else {
+        input.setSelectionRange(cursor, cursor);
+        const text = [...input.value];
+        text.splice(cursor, 0, event.target.textContent);
+        input.value = text.join('');
+        cursor += 1;
+        input.setSelectionRange(cursor, cursor);
+      }
     } else if (event.target.textContent === 'CapsLk') {
       capsChange();
     } else if (event.target.textContent === 'Tab') {
@@ -256,11 +298,13 @@ rows.forEach((e) => {
 });
 
 document.addEventListener('keydown', (e) => {
+  document.querySelector(`.${e.code}`).classList.add('key-active');
   if (e.altKey && e.ctrlKey) {
     langChange();
   }
-  document.querySelector(`.${e.code}`).classList.add('key-active');
-
+  if (e.key === 'Alt') {
+    e.preventDefault();
+  }
   if (e.key === 'Shift') {
     e.preventDefault();
     shiftChange(e);
@@ -282,14 +326,24 @@ document.addEventListener('keydown', (e) => {
   } else if (e.key.length === 1) {
     e.preventDefault();
     input.focus();
-    input.setSelectionRange(cursor, cursor);
-    let text = [...input.value];
-    const cur = document.querySelector(`.${e.code}`).textContent;
-    text.splice(cursor, 0, cur);
-    text = text.join('');
-    input.value = text;
-    cursor += 1;
-    input.setSelectionRange(cursor, cursor);
+    if (input.selectionStart !== input.selectionEnd) {
+      let text = [...input.value];
+      const cur = document.querySelector(`.${e.code}`).textContent;
+      text.splice(input.selectionStart, input.selectionEnd - input.selectionStart, cur);
+      text = text.join('');
+      input.value = text;
+      cursor += 1;
+      input.setSelectionRange(cursor, cursor);
+    } else {
+      input.setSelectionRange(cursor, cursor);
+      let text = [...input.value];
+      const cur = document.querySelector(`.${e.code}`).textContent;
+      text.splice(cursor, 0, cur);
+      text = text.join('');
+      input.value = text;
+      cursor += 1;
+      input.setSelectionRange(cursor, cursor);
+    }
   }
 });
 
@@ -305,8 +359,13 @@ document.addEventListener('keyup', (e) => {
 });
 
 input.addEventListener('click', () => {
-  cursor = input.selectionStart;
-  input.setSelectionRange(cursor, cursor);
+  if (input.selectionStart !== input.selectionEnd) {
+    input.setSelectionRange(input.selectionStart, input.selectionEnd);
+    cursor = input.selectionStart;
+  } else {
+    cursor = input.selectionStart;
+    input.setSelectionRange(cursor, cursor);
+  }
 });
 
 function setLocalStorage() {
