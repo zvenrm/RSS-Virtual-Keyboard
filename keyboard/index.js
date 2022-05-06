@@ -67,6 +67,7 @@ if (localStorage.getItem('checkCaps') === 'true') {
 } else {
   checkCaps = false;
 }
+let shft = false;
 input.focus();
 let cursor = input.selectionStart;
 
@@ -243,9 +244,10 @@ function langChange() {
     lang = 'en';
     document.querySelector('.key_lang').textContent = 'en';
   }
+  shft = false;
 }
 
-document.addEventListener('mousedown', (e) => {
+/* document.addEventListener('mousedown', (e) => {
   if (e.target.textContent === 'Shift') {
     shiftDown();
   }
@@ -255,7 +257,7 @@ document.addEventListener('mouseup', (e) => {
   if (e.target.textContent === 'Shift') {
     shiftUp();
   }
-});
+}); */
 
 rows.forEach((e) => {
   e.addEventListener('click', (event) => {
@@ -281,6 +283,10 @@ rows.forEach((e) => {
         cursor += 1;
         input.setSelectionRange(cursor, cursor);
       }
+      if (shft === true) {
+        shiftUp();
+        shft = false;
+      }
     } else if (event.target.textContent === 'CapsLk') {
       capsChange();
     } else if (event.target.textContent === 'Tab') {
@@ -293,6 +299,14 @@ rows.forEach((e) => {
       enterChange();
     } else if (event.target.textContent === 'en' || event.target.textContent === '🇷🇺') {
       langChange();
+    } else if (event.target.textContent === 'Shift') {
+      if (shft === false) {
+        shiftDown();
+        shft = true;
+      } else {
+        shiftUp();
+        shft = false;
+      }
     }
   });
 });
@@ -343,6 +357,10 @@ document.addEventListener('keydown', (e) => {
       input.value = text;
       cursor += 1;
       input.setSelectionRange(cursor, cursor);
+    }
+    if (shft === true) {
+      shiftUp();
+      shft = false;
     }
   }
 });
