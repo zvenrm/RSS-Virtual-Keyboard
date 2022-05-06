@@ -247,18 +247,6 @@ function langChange() {
   shft = false;
 }
 
-/* document.addEventListener('mousedown', (e) => {
-  if (e.target.textContent === 'Shift') {
-    shiftDown();
-  }
-});
-
-document.addEventListener('mouseup', (e) => {
-  if (e.target.textContent === 'Shift') {
-    shiftUp();
-  }
-}); */
-
 rows.forEach((e) => {
   e.addEventListener('click', (event) => {
     input.focus();
