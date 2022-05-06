@@ -81,6 +81,10 @@ body{
     background-color: #00930a;
 }
 
+.key:focus{
+    outline: none;
+}
+
 .key-active{
     transform: scale(0.95, 0.95);
     background-color: #00930a;

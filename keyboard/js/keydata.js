@@ -179,7 +179,7 @@ const keyData = [
     {
       key: { ru: 'Alt', en: 'Alt' }, code: 'AltLeft', class: 'key key_leftalt AltLeft', noType: true,
     },
-    { key: { ru: 'Space', en: 'Space' }, code: 'Space', class: 'key key_space Space' },
+    { key: { ru: ' ', en: ' ' }, code: 'Space', class: 'key key_space Space' },
     {
       key: { ru: 'Alt', en: 'Alt' }, code: 'AltRight', class: 'key key_rightalt AltRight', noType: true,
     },
@@ -196,7 +196,7 @@ const keyData = [
       key: { ru: '►', en: '►' }, code: 'ArrowRight', noType: true, class: 'key ArrowRight',
     },
     {
-      key: { ru: '🇷🇺', en: '🇺🇸' }, code: 'Lang', class: 'key key_lang Lang', noType: true,
+      key: { ru: '🇷🇺', en: 'en' }, code: 'Lang', class: 'key key_lang Lang', noType: true,
     },
   ],
 ];
