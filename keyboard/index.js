@@ -38,6 +38,19 @@ function getLocalStorage() {
       document.querySelector('.key_lang').textContent = '🇷🇺';
     }
   }
+  if (localStorage.getItem('checkCaps')) {
+    const cap = localStorage.getItem('checkCaps');
+    if (cap === 'true') {
+      caps.classList.add('key_caps');
+      for (let i = 0; i < 5; i += 1) {
+        for (let j = 0; j < rows[i].children.length; j += 1) {
+          if (rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = rows[i].children[j].innerHTML.toUpperCase();
+          }
+        }
+      }
+    }
+  }
 }
 window.addEventListener('load', getLocalStorage);
 
@@ -46,6 +59,13 @@ if (localStorage.getItem('lang') === 'ru') {
   lang = 'ru';
 } else {
   lang = 'en';
+}
+
+let checkCaps;
+if (localStorage.getItem('checkCaps') === 'true') {
+  checkCaps = true;
+} else {
+  checkCaps = false;
 }
 input.focus();
 let cursor = input.selectionStart;
@@ -149,6 +169,7 @@ function capsChange() {
         }
       }
     }
+    checkCaps = true;
   } else {
     caps.classList.remove('key_caps');
     for (let i = 0; i < 5; i += 1) {
@@ -158,6 +179,7 @@ function capsChange() {
         }
       }
     }
+    checkCaps = false;
   }
 }
 
@@ -289,5 +311,6 @@ input.addEventListener('click', () => {
 
 function setLocalStorage() {
   localStorage.setItem('lang', lang);
+  localStorage.setItem('checkCaps', checkCaps);
 }
 window.addEventListener('beforeunload', setLocalStorage);
