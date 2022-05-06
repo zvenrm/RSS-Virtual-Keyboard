@@ -11,7 +11,42 @@ const rows = document.querySelectorAll('.row');
 const input = document.querySelector('.input');
 const caps = document.querySelector('.CapsLock');
 
-let lang = 'en';
+function getLocalStorage() {
+  if (localStorage.getItem('lang')) {
+    const languag = localStorage.getItem('lang');
+    if (languag === 'en') {
+      for (let i = 0; i < 5; i += 1) {
+        for (let j = 0; j < rows[i].children.length; j += 1) {
+          if (!caps.classList.contains('key_caps') && rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.en;
+          } else if (rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.en.toUpperCase();
+          }
+        }
+      }
+      document.querySelector('.key_lang').textContent = 'en';
+    } else {
+      for (let i = 0; i < 5; i += 1) {
+        for (let j = 0; j < rows[i].children.length; j += 1) {
+          if (!caps.classList.contains('key_caps') && rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.ru;
+          } else if (rows[i].children[j].textContent.length === 1) {
+            rows[i].children[j].innerHTML = keyData[i][j].key.ru.toUpperCase();
+          }
+        }
+      }
+      document.querySelector('.key_lang').textContent = '🇷🇺';
+    }
+  }
+}
+window.addEventListener('load', getLocalStorage);
+
+let lang;
+if (localStorage.getItem('lang') === 'ru') {
+  lang = 'ru';
+} else {
+  lang = 'en';
+}
 input.focus();
 let cursor = input.selectionStart;
 
@@ -251,3 +286,8 @@ input.addEventListener('click', () => {
   cursor = input.selectionStart;
   input.setSelectionRange(cursor, cursor);
 });
+
+function setLocalStorage() {
+  localStorage.setItem('lang', lang);
+}
+window.addEventListener('beforeunload', setLocalStorage);
