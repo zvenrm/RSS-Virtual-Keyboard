@@ -304,7 +304,7 @@ document.addEventListener('keydown', (e) => {
   if (e.altKey && e.ctrlKey) {
     langChange();
   }
-  if (e.key === 'Alt') {
+  if (e.key === 'Alt' || e.key === 'AltGraph') {
     e.preventDefault();
   }
   if (e.key === 'Shift') {
