@@ -238,11 +238,7 @@ document.addEventListener('keydown', (e) => {
     langChange();
   }
   document.querySelector(`.${e.code}`).classList.add('key-active');
-  if (e.key.length > 1) {
-    document.querySelectorAll('.key').forEach((el) => {
-      el.blur();
-    });
-  }
+
   if (e.key === 'Shift') {
     e.preventDefault();
     shiftChange(e);
@@ -279,6 +275,10 @@ document.addEventListener('keyup', (e) => {
   document.querySelector(`.${e.code}`).classList.remove('key-active');
   if (e.key === 'Shift') {
     shiftChange(e);
+  } else if (e.key.includes('Arrow')) {
+    input.focus();
+    cursor = input.selectionStart;
+    input.setSelectionRange(cursor, cursor);
   }
 });
 
