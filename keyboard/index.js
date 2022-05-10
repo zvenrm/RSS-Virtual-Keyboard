@@ -298,7 +298,7 @@ rows.forEach((e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (!e.key.includes('F')) {
+  if (document.querySelector(`.${e.code}`) !== null) {
     document.querySelector(`.${e.code}`).classList.add('key-active');
   }
 
@@ -340,7 +340,11 @@ document.addEventListener('keydown', (e) => {
     } else {
       input.setSelectionRange(cursor, cursor);
       let text = [...input.value];
-      const cur = document.querySelector(`.${e.code}`).textContent;
+      let cur;
+      if (document.querySelector(`.${e.code}`) !== null) {
+        cur = document.querySelector(`.${e.code}`).textContent;
+      }
+
       text.splice(cursor, 0, cur);
       text = text.join('');
       input.value = text;
@@ -351,7 +355,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-  if (!e.key.includes('F')) {
+  if (document.querySelector(`.${e.code}`) !== null) {
     document.querySelector(`.${e.code}`).classList.remove('key-active');
   }
 
