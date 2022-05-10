@@ -298,7 +298,10 @@ rows.forEach((e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  document.querySelector(`.${e.code}`).classList.add('key-active');
+  if (!e.key.includes('F')) {
+    document.querySelector(`.${e.code}`).classList.add('key-active');
+  }
+
   if (e.altKey && e.ctrlKey) {
     langChange();
   }
@@ -348,7 +351,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('keyup', (e) => {
-  document.querySelector(`.${e.code}`).classList.remove('key-active');
+  if (!e.key.includes('F')) {
+    document.querySelector(`.${e.code}`).classList.remove('key-active');
+  }
+
   if (e.key === 'Shift') {
     shiftChange(e);
   } else if (e.key.includes('Arrow')) {
